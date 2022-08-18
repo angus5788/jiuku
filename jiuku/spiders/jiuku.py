@@ -1,9 +1,14 @@
-import json
+import json,os
 from ..items import *
 from scrapy.utils.project import get_project_settings
 
 
 class JiukuSpider(scrapy.Spider):
+    def __init__(self):
+        settings = get_project_settings().get("FILES_STORE")
+        if not os.path.exists(settings):
+            os.makedirs(settings)
+
     name = 'jiuku'
     # start_urls = ['http://www.9ku.com/laoge/500shou.htm']
     # start_urls = ['http://www.9ku.com/music/t_m_hits.htm']
@@ -29,6 +34,7 @@ class JiukuSpider(scrapy.Spider):
 
     def dwonload_Lrc(self, response):
         settings = get_project_settings().get("FILES_STORE")
+
         title = response.xpath("/html/head/title/text()").get()
         s = title.find("在")
         SongNmae = title[:s:]
