@@ -1,4 +1,5 @@
-import requests,json
+import re
+import requests
 from lxml import etree
 
 headers = {
@@ -13,22 +14,26 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'
 }
 
+
 def get():
-    url = "http://www.9ku.com/laoge/500shou.htm"
+    url = "https://www.9ku.com/douyin/bang.htm"
     res = requests.get(url).text
-    html = etree.HTML(res)
+    # html = etree.HTML(res)
     # value =html.xpath("//div[@class='Mbox-bd']/div[contains(@class, 'musicList')]//li/input/@value")
-    listSong =html.xpath("//div[contains(@class, 'songList')]//ol//li/input/@value")
-    print(len(listSong))
+    # listSong =html.xpath("//div[contains(@class, 'songList')]//ol//li/input/@value")
+    a = re.compile('<a target="(.*?)" href="(.*?)" class="songName ">(.*?)</a>')
+    listSong = a.findall(res)
+
     for i in listSong:
-        urls = 'http://www.9ku.com/html/playjs/%s/%s.js' % (i[:3], i[:-1])
-        paly = "http://www.9ku.com/play/%s.htm"% i[:-1]
+        #     urls = 'http://www.9ku.com/html/playjs/%s/%s.js' % (i[:3], i[:-1])
+        paly = "http://www.9ku.com/%s" % (i[1])
         res = requests.get(paly, headers=headers).text
+        content = re.compile('<meta property="og:title" content="(.*?)"/>')
+        name = content.findall(res)
         html = etree.HTML(res)
         text = html.xpath("//*[@id='lrc_content']/text()")
         print(text[0])
-        # res = requests.get(urls, headers=headers)
-        # jsonText = json.loads(res.text[1:-1:])
-        # # print(jsonText["mname"], jsonText["singer"], jsonText["wma"])
-if __name__=="__main__":
+
+
+if __name__ == "__main__":
     get()

@@ -8,7 +8,7 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'jiuku'
-
+HTTPERROR_ALLOWED_CODES = [301]
 SPIDER_MODULES = ['jiuku.spiders']
 NEWSPIDER_MODULE = 'jiuku.spiders'
 
@@ -39,7 +39,8 @@ ROBOTSTXT_OBEY = False
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-    'User-Agent': 'Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html)'
+    'User-Agent': 'Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html)',
+     'referer': 'https://www.9ku.com/'
 }
 
 # Enable or disable spider middlewares
@@ -51,7 +52,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'jiuku.middlewares.JiukuDownloaderMiddleware': 543
+   'jiuku.middlewares.JiukuDownloaderMiddleware': 1
 }
 
 # Enable or disable extensions
@@ -65,7 +66,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    'jiuku.pipelines.MyFilesPipeline': 1
 }
-FILES_STORE = 'D:\\py\\jiuku\\new'
+FILES_STORE = 'D:\\CODE\\python\\jiuku\\mp3\\'
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

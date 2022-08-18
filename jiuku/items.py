@@ -7,11 +7,12 @@ import scrapy
 
 
 class JiukuItem(scrapy.Item):
-    # define the fields for your item here like:
+
     UserName = scrapy.Field()
     songName = scrapy.Field()
     pic = scrapy.Field()
     mp3 = scrapy.Field()
     lrc = scrapy.Field()
     url = scrapy.Field()
+    id = scrapy.Field()
 
